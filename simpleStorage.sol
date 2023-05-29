@@ -4,9 +4,10 @@ pragma solidity 0.8.8; // Set version.
 contract SimpleStorage {
     // bool hasFavoriteNumber = true;
     uint public favoriteNumber = 123;
-    // string favoriteNumberinText  = "five";
-    // int number = 5;
-    // bytes32 favoriteBytes = 'cat';
+    
+    // Mapping, (hash table)
+    mapping(string => uint) public nameToFavoriteNumber;
+    mapping(uint => string) public numberToName;
 
     // Object, (same as a constructor )
     struct People {
@@ -15,6 +16,7 @@ contract SimpleStorage {
     }
     // People public person = People({favoriteNumber: 2, name: "Magnus"});
 
+    // Array 
     People[] public people;
 
 
@@ -24,16 +26,16 @@ contract SimpleStorage {
     // storage = pemanent data, mutable
     function addPerson (string memory _name, uint _favoriteNumber) public {
         people.push(People(_name, _favoriteNumber));
+        nameToFavoriteNumber[_name] = _favoriteNumber;
+        numberToName[_favoriteNumber] = _name;
     }
-
-
 
     function store (uint _favoriteNumber) public  {
         favoriteNumber = _favoriteNumber;
     }
 
+    // view and pure fuctions are read only functions and does not cost gass fees.
     function read () public view returns(uint256)  {
         return favoriteNumber;
     }
 }
-
