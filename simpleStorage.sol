@@ -30,7 +30,7 @@ contract SimpleStorage {
         numberToName[_favoriteNumber] = _name;
     }
 
-    function store (uint _favoriteNumber) public  {
+    function store (uint _favoriteNumber) public virtual {
         favoriteNumber = _favoriteNumber;
     }
 

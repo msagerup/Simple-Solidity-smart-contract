@@ -31,7 +31,6 @@ contract StorageFactory {
         // return simpleStorage.read();
 
         // Refactor, same as above.
-
         return simpleStorageArray[_simpleStorageIndex].read();
     }
 }
