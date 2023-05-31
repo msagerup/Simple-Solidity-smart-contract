@@ -5,7 +5,7 @@ import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 contract FoundMe {
 
-    uint256 public minUsd = 50 *1e18; // 1*10  ** 18 ;
+    uint256 public minUsd = 50 * 1e18; // 1*10  ** 18 ;
 
     function found() public payable  {
         // I want to be able to set a minimum found amount in USD.
