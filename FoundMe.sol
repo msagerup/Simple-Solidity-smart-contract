@@ -4,15 +4,19 @@ pragma solidity ^0.8.0;
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 contract FoundMe {
-    uint256 public minUsd = 50 * 1e18; // 1*10  ** 18 ;
+
+    uint256 public minUsd = 50 *1e18; // 1*10  ** 18 ;
+    address[] public founders;
+    mapping(address => uint256) public addressToAmountFounded;
+
     function found() public payable  {
-        
         // I want to be able to set a minimum found amount in USD.
         // 1. How do I send ETH to this contract?
 
         // This revers if condition is not meet.
         require(getConvertionRate(msg.value) >= minUsd, "You dind't send enough, brokie.."); // 1e18 = 1 * 10 ** 18 = 1000000000000000000 = 1ETH
-
+        founders.push(msg.sender);
+        addressToAmountFounded[msg.sender] = msg.value;
     }
 
     function getPrice() public view returns(uint256) {
@@ -29,4 +33,9 @@ contract FoundMe {
 
         return ethAmountInUsd;
     }
+
+    function withdraw() public {
+
+    }
+
 }
