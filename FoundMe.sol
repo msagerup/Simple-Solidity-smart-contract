@@ -6,23 +6,21 @@ import "./PriceConverter.sol";
 contract FoundMe {
     using PriceConverter for uint256;
 
-    uint256 public minUsd = 50 *1e18; // 1*10  ** 18 ;
+    uint256 public constant MINUSD = 50 *1e18; // 1*10  ** 18 ;
     address[] public founders;
     mapping(address => uint256) public addressToAmountFounded;
 
-    address public owner;
-
+    address public immutable i_owner;
 
     constructor() {
         // Contructor runs as the fist function when creating a contract. 
         // This ensure that we are set as the owner. (whom ever deploys the contract)
-        owner = msg.sender;
+        i_owner = msg.sender;
     }
-
 
     function found() public payable  {
         // When using a library, the first values before the method is the first param. so here, msg.value is the param for getConvertionRate function.
-        require(msg.value.getConvertionRate() >= minUsd, "You dind't send enough, brokie.."); // 1e18 = 1 * 10 ** 18 = 1000000000000000000 = 1ETH
+        require(msg.value.getConvertionRate() >= MINUSD, "You dind't send enough, brokie.."); // 1e18 = 1 * 10 ** 18 = 1000000000000000000 = 1ETH
         founders.push(msg.sender);
         addressToAmountFounded[msg.sender] = msg.value;
     }
@@ -51,8 +49,17 @@ contract FoundMe {
     }
 
     modifier onlyOwner {
-     require(msg.sender == owner, "Only owner can withdraw");
+     require(msg.sender == i_owner, "Only owner can withdraw");
      _;
     }
-}
 
+    // Fallbacks.
+     
+    receive() external payable {
+       found();
+    }
+
+    fallback() external  payable {
+        found();
+    }
+}
