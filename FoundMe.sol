@@ -59,7 +59,7 @@ contract FoundMe {
        found();
     }
 
-    fallback() external  payable {
+    fallback() external payable {
         found();
     }
 }
